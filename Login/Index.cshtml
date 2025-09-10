@@ -1,0 +1,44 @@
+@page
+@model Project.Pages.Login.IndexModel
+@{
+    ViewData["Title"] = "List of Login";
+}
+
+<br>
+<h2>List of Login</h2>
+<a class="btn btn-primary btn-sm" href="/Login/Create">New Login</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Login_date</th>
+            <th>operation</th>
+            
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListLogin.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No logins found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListLogin)
+            {
+                <tr>
+                    <td>@item.Operator_id</td>
+                    <td>@item.Login_date</td>
+                    <td>@item.operation</td>
+                    
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Login/Edit?id=@item.Operator_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Login/Delete?id=@item.Operator_id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
