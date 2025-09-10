@@ -1,0 +1,50 @@
+@page
+@model Project.Pages.Invoice.IndexModel
+@{
+    ViewData["Title"] = "List of Invoices";
+}
+
+<br>
+<h2>List of Invoices</h2>
+<a class="btn btn-primary btn-sm" href="/Invoice/Create">New Invoice</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Price</th>
+            <th>Tax</th>
+            <th>Date</th>
+            <th>Due_date</th>
+     	    <th>total</th>
+	    <th>Order_id</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListInvoice.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No Invoices found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListInvoice)
+            {
+                <tr>
+                    <td>@item.Invoice_id</td>
+                    <td>@item.Price</td>
+                    <td>@item.Tax</td>
+                    <td>@item.Date</td>
+		    <td>@item.Due_date</td>
+		    <td>@item.total</td>
+		    <td>@item.Order_id</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Invoice/Edit?id=@item.Invoice_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Invoice/Delete?id=@item.Invoice_id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

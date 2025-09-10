@@ -1,0 +1,29 @@
+@page
+
+@using System.Data.SqlClient;
+@{
+
+    try
+    {
+        String Invoice_id = Request.Query["Invoice_id"];
+
+        String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Project;Integrated Security=True";
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            String sql = "DELETE FROM Invoice WHERE Invoice_id=@Invoice_id";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@Invoice_id", Invoice_id);
+                command.ExecuteNonQuery();
+
+            }
+        }
+    }
+
+    catch (Exception ex)
+    {
+        
+    }
+}
+

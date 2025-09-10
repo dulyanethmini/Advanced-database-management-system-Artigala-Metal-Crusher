@@ -1,0 +1,95 @@
+@page
+@model Project.Pages.Invoice.CreateModel
+@{
+    ViewData["Title"] = "New Invoice";
+}
+
+<br>
+<h2>New Invoice</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.ErrorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form method="post">
+    <div class="row mb-3">
+        <label asp-for="Invoice.Invoice_id" class="col-sm-3 col-form-label">Invoice ID</label>
+        <div class="col-sm-6">
+            <input asp-for="Invoice.Invoice_id" class="form-control" />
+            <span asp-validation-for="Invoice.Invoice_id" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Invoice.Price" class="col-sm-3 col-form-label">Price</label>
+        <div class="col-sm-6">
+            <input asp-for="Invoice.Price" class="form-control" />
+            <span asp-validation-for="Invoice.Price" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Invoice.Tax" class="col-sm-3 col-form-label">Tax</label>
+        <div class="col-sm-6">
+            <input asp-for="Invoice.Tax" class="form-control" />
+            <span asp-validation-for="Invoice.Tax" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Invoice.Date" class="col-sm-3 col-form-label">Date</label>
+        <div class="col-sm-6">
+            <input asp-for="Invoice.Date" type="date" class="form-control" />
+            <span asp-validation-for="Invoice.Date" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Invoice.Due_date" class="col-sm-3 col-form-label">Due Date</label>
+        <div class="col-sm-6">
+            <input asp-for="Invoice.Due_date" type="date" class="form-control" />
+            <span asp-validation-for="Invoice.Due_date" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Invoice.total" class="col-sm-3 col-form-label">Total</label>
+        <div class="col-sm-6">
+            <input asp-for="Invoice.total" class="form-control" />
+            <span asp-validation-for="Invoice.total" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Invoice.Order_id" class="col-sm-3 col-form-label">Order ID</label>
+        <div class="col-sm-6">
+            <input asp-for="Invoice.Order_id" class="form-control" />
+            <span asp-validation-for="Invoice.Order_id" class="text-danger"></span>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>@Model.SuccessMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/Invoice/Index" role="button">Cancel</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
