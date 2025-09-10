@@ -1,0 +1,85 @@
+//This is the create.cshtml page
+
+@page
+@model Project.Pages.Customer.CreateModel
+@{
+    ViewData["Title"] = "New Customer";
+}
+
+<br>
+<h2>New Customer</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.ErrorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form method="post">
+    <div class="row mb-3">
+        <label asp-for="Customer.Customer_id" class="col-sm-3 col-form-label">Customer ID</label>
+        <div class="col-sm-6">
+            <input asp-for="Customer.Customer_id" class="form-control" />
+            <span asp-validation-for="Customer.Customer_id" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Customer.Customer_contact" class="col-sm-3 col-form-label">Customer Contact</label>
+        <div class="col-sm-6">
+            <input asp-for="Customer.Customer_contact" class="form-control" />
+            <span asp-validation-for="Customer.Customer_contact" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Customer.Address" class="col-sm-3 col-form-label">Customer Address</label>
+        <div class="col-sm-6">
+            <input asp-for="Customer.Address" class="form-control" />
+            <span asp-validation-for="Customer.Address" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Customer.Order_id" class="col-sm-3 col-form-label">Order ID</label>
+        <div class="col-sm-6">
+            <input asp-for="Customer.Order_id" class="form-control" />
+            <span asp-validation-for="Customer.Order_id" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="Customer.Invoice_id" class="col-sm-3 col-form-label">Invoice ID</label>
+        <div class="col-sm-6">
+            <input asp-for="Customer.Invoice_id" class="form-control" />
+            <span asp-validation-for="Customer.Invoice_id" class="text-danger"></span>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>@Model.SuccessMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/Material/Index" role="button">Cancel</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

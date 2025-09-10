@@ -1,0 +1,88 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Project.Pages.Customer;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
+
+namespace Project.Pages.Customer
+{
+    public class EditModel : PageModel
+    {
+        private readonly string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Project;Integrated Security=True";
+
+        [BindProperty]
+        public CustomerInfo Customer { get; set; }
+
+        public IActionResult OnGet(int id)
+        {
+            Customer = GetCustomerById(id);
+            if (Customer == null)
+            {
+                return NotFound();
+            }
+            return Page();
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "UPDATE Customer SET Customer_id = @Customer_id, Customer_contact = @Customer_contact, Address = @Address, Order_id=@Order_id, @Invoice=@Invoice_id WHERE Customer_id = @Customer_id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Customer_id", Customer.Customer_id);
+                        command.Parameters.AddWithValue("@Customer_contact", Customer.Customer_contact);
+                        command.Parameters.AddWithValue("@Address", Customer.Address);
+                        command.Parameters.AddWithValue("@Order_id", Customer.Order_id);
+                        command.Parameters.AddWithValue("@Invoice_id", Customer.Invoice_id);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                // Handle error
+                return Page();
+            }
+        }
+
+        private CustomerInfo GetCustomerById(int id)
+        {
+            CustomerInfo customer = null;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                string sql = "UPDATE Customer SET Customer_id = @Customer_id, Customer_contact = @Customer_contact, Address = @Address, Order_id=@Order_id, @Invoice=@Invoice_id WHERE Customer_id = @Customer_id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@Customer_id", id);
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            customer = new CustomerInfo
+                            {
+                                Customer_id = (int)reader["Customer_id"],
+                                Customer_contact = reader["Customer_contact"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Order_id = (int)reader["Order_id"],
+                                Invoice_id = (int)reader["Invoice_id"]
+                            };
+                        }
+                    }
+                }
+            }
+            return customer;
+        }
+    }
+}

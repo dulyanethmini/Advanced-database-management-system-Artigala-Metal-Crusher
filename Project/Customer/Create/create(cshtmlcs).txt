@@ -1,0 +1,63 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using Project.Pages.Material;
+using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
+
+namespace Project.Pages.Customer
+{
+    public class CreateModel : PageModel
+    {
+        [BindProperty]
+        public CustomerInfo Customer { get; set; }
+
+        public string ErrorMessage { get; set; }
+        public string SuccessMessage { get; set; }
+
+        public void OnGet()
+        {
+            ErrorMessage = string.Empty;
+            SuccessMessage = string.Empty;
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            try
+            {
+                string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Project;Integrated Security=True";
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "INSERT INTO Customer (Customer_id, Customer_contact, Address, Order_id, Invoice_id) VALUES (@Customer_id, @Customer_contact, @Address, @Order_id, @Invoice_id); SELECT SCOPE_IDENTITY()";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@Customer_id", Customer.Customer_id);
+                        command.Parameters.AddWithValue("@Date_received", Customer.Customer_contact);
+                        command.Parameters.AddWithValue("@Loaded_Quantity", Customer.Address);
+                        command.Parameters.AddWithValue("@Loaded_Quantity", Customer.Order_id);
+                        command.Parameters.AddWithValue("@Loaded_Quantity", Customer.Invoice_id);
+
+                        // ExecuteScalar to get the generated ID
+                        //int newMaterialId = Convert.ToInt32(command.ExecuteScalar());
+                        //Material.Material_id = newMaterialId;
+                    }
+                }
+
+                SuccessMessage = "New customer added successfully!";
+                return RedirectToPage("./Index");
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "An error occurred while creating the customer details: " + ex.Message;
+                return Page();
+            }
+        }
+    }
+}

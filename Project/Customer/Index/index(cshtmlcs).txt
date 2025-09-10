@@ -1,0 +1,75 @@
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+
+namespace Project.Pages.Customer
+{
+    public class IndexModel : PageModel
+    {
+        private readonly ILogger<IndexModel> _logger;
+
+        public IndexModel(ILogger<IndexModel> logger)
+        {
+            _logger = logger;
+        }
+
+        public List<CustomerInfo> ListCustomer { get; set; } = new List<CustomerInfo>();
+
+        public void OnGet()
+        {
+            try
+            {
+                string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Project;Integrated Security=True";
+                _logger.LogInformation("Attempting to connect to the database");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    _logger.LogInformation("Database connection established");
+
+                    string sql = "SELECT Customer_id, Address, Customer_contact, Order_id, Invoice_id FROM Customer";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                CustomerInfo customerInfo = new CustomerInfo
+                                {
+                                    Customer_id = reader["Customer_id"].ToString(),
+                                    Address = reader["Address"].ToString(),
+                                    Customer_contact = reader["Customer_contact"].ToString(),
+                                    Order_id = reader["Order_id"].ToString(),
+                                    Invoice_id = reader["Invoice_id"].ToString()
+                                };
+
+                                ListCustomer.Add(customerInfo);
+                                _logger.LogInformation("Added customer: {Customer}", customerInfo);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting customer data");
+            }
+        }
+    }
+
+    public class CustomerInfo
+    {
+        public string Customer_id { get; set; }
+        public string Customer_contact { get; set; }
+        public string Address { get; set; }
+        public string Order_id { get; set; }
+        public string Invoice_id { get; set; }
+
+        public static implicit operator CustomerInfo(CustomerInfo v)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

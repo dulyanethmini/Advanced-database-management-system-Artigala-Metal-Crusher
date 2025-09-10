@@ -1,0 +1,55 @@
+@page
+@model Project.Pages.Material.EditModel
+@{
+    ViewData["Title"] = "Edit Material";
+}
+
+<h2>Edit Material</h2>
+
+<form method="post">
+    <div class="row mb-3">
+        <label asp-for="Material.Material_Name" class="col-sm-3 col-form-label">Material ID</label>
+        <div class="col-sm-6">
+            <input asp-for="Material.Material_Name" class="form-control" />
+            <span asp-validation-for="Material.Material_Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Material.Material_Name" class="col-sm-3 col-form-label">Material Name</label>
+        <div class="col-sm-6">
+            <input asp-for="Material.Material_Name" class="form-control" />
+            <span asp-validation-for="Material.Material_Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Material.Date_received" class="col-sm-3 col-form-label">Received Date</label>
+        <div class="col-sm-6">
+            <input asp-for="Material.Date_received" type="date" class="form-control" />
+            <span asp-validation-for="Material.Date_received" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Material.Loaded_Quantity" class="col-sm-3 col-form-label">Loaded Quantity</label>
+        <div class="col-sm-6">
+            <input asp-for="Material.Loaded_Quantity" type="number" class="form-control" />
+            <span asp-validation-for="Material.Loaded_Quantity" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-9">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a class="btn btn-outline-primary" href="/Material/Index" role="button">Cancel</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

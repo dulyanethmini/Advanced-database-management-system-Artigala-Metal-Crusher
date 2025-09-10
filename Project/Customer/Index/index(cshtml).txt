@@ -1,0 +1,46 @@
+@page
+@model Project.Pages.Customer.IndexModel
+@{
+    ViewData["Title"] = "List of Customers";
+}
+
+<br>
+<h2>List of Customer</h2>
+<a class="btn btn-primary btn-sm" href="/Customer/Create">New Customer</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Address</th>
+            <th>Customer Contact</th>
+            <th>Order ID</th>
+            <th>Invoice ID</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListCustomer.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No Customers found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListCustomer)
+            {
+                <tr>
+                    <td>@item.Customer_id</td>
+                    <td>@item.Address</td>
+                    <td>@item.Customer_contact</td>
+                    <td>@item.Order_id</td>
+                    <td>@item.Invoice_id</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Material/Edit?id=@item.Customer_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Material/Delete?id=@item.Customer_id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
