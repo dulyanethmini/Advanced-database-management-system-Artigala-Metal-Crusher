@@ -1,0 +1,29 @@
+@page
+
+@using System.Data.SqlClient;
+@{
+
+    try
+    {
+        String Operator_id = Request.Query["Operator_id"];
+
+        String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Project;Integrated Security=True";
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            String sql = "DELETE FROM Operator WHERE Operator_id=@Operator_id";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@Operator_id", Operator_id);
+                command.ExecuteNonQuery();
+
+            }
+        }
+    }
+
+    catch (Exception ex)
+    {
+        
+    }
+}
+

@@ -1,0 +1,44 @@
+@page
+@model Project.Pages.Operator.IndexModel
+@{
+    ViewData["Title"] = "List of Operator";
+}
+
+<br>
+<h2>List of Operators</h2>
+<a class="btn btn-primary btn-sm" href="/Operator/Create">New Operator</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Contact_number</th>
+            <th>Password</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListOperator.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No Operators found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListOperator)
+            {
+                <tr>
+                    <td>@item.Operator_id</td>
+                    <td>@item.Contact_number</td>
+                    <td>@item.Password</td>
+                    <td>@item.Address</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Operator/Edit?id=@item.Operator_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Operator/Delete?id=@item.Operator_id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
