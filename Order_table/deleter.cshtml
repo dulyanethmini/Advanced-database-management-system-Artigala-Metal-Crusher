@@ -1,0 +1,29 @@
+@page
+
+@using System.Data.SqlClient;
+@{
+
+    try
+    {
+        String Order_id = Request.Query["Order_id"];
+
+        String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Project;Integrated Security=True";
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            String sql = "DELETE FROM Order_table WHERE Order_id=@Order_id";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@Order_id", Order_id);
+                command.ExecuteNonQuery();
+
+            }
+        }
+    }
+
+    catch (Exception ex)
+    {
+        
+    }
+}
+

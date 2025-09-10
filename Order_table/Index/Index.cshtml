@@ -1,0 +1,46 @@
+@page
+@model Project.Pages.Order_table.IndexModel
+@{
+    ViewData["Title"] = "List of Order";
+}
+
+<br>
+<h2>List of Orders</h2>
+<a class="btn btn-primary btn-sm" href="/Order_table/Create">New Order</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Size_id</th>
+            <th>Order_quantity</th>
+            <th>Order_type</th>
+            <th>Material_id</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListOrder_table.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No Order_table found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListOrder_table)
+            {
+                <tr>
+                    <td>@item.Order_id</td>
+                    <td>@item.Size_id</td>
+                    <td>@item.Order_quantity</td>
+                    <td>@item.Order_type</td>
+                    <td>@item.Material_ide</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Order_table/Edit?id=@item.Order_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Order_table/Delete?id=@item.Order_id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
