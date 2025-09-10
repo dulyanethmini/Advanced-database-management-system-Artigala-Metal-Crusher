@@ -1,0 +1,44 @@
+@page
+@model Project.Pages.Size_classification.IndexModel
+@{
+    ViewData["Title"] = "List of Materials";
+}
+
+<br>
+<h2>List of Materials in classified sizes</h2>
+<a class="btn btn-primary btn-sm" href="/Material/Create">New size classification</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Size Description</th>
+            <th>Material ID</th>
+            
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListSize_classification.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No Size_classifications found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListSize_classification)
+            {
+                <tr>
+                    <td>@item.Size_id</td>
+                    <td>@item.size_description</td>
+                    <td>@item.Material_id</td>
+                    
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Size_classification/Edit?id=@item.Size_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Size_classification/Delete?id=@item.Size_id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,29 @@
+@page
+
+@using System.Data.SqlClient;
+@{
+
+    try
+    {
+        String Size_id = Request.Query["Size_id"];
+
+        String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Project;Integrated Security=True";
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            String sql = "DELETE FROM Size_classification WHERE Size_id=@Size_id";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@Size_id", Size_id);
+                command.ExecuteNonQuery();
+
+            }
+        }
+    }
+
+    catch (Exception ex)
+    {
+        
+    }
+}
+
