@@ -1,0 +1,44 @@
+@page
+@model Project.Pages.Quantity.IndexModel
+@{
+    ViewData["Title"] = "List of Quantities";
+}
+
+<br>
+<h2>List of Quantities</h2>
+<a class="btn btn-primary btn-sm" href="/Material/Create">New Quantity</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Received Date</th>
+            <th>Remaining_quantity</th>
+            
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListQuantity.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No quantities found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListQuantity)
+            {
+                <tr>
+                    <td>@item.Material_id</td>
+                    <td>@item.Date_received</td>
+                    <td>@item.Remaining_quantity</td>
+                    
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Quantity/Edit?id=@item.Material_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Quantity/Delete?id=@item.Material_id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
