@@ -1,0 +1,81 @@
+@page
+@model Project.Pages.CrushingProcess.CreateModel
+@{
+    ViewData["Title"] = "New Crushing Process";
+}
+
+<br>
+<h2>New Crushing Process</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.ErrorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form method="post">
+    <div class="row mb-3">
+        <label asp-for="CrushingProcess.Process_id" class="col-sm-3 col-form-label">Process ID</label>
+        <div class="col-sm-6">
+            <input asp-for="CrushingProcess.Process_id" class="form-control" />
+            <span asp-validation-for="CrushingProcess.Process_id" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="CrushingProcess.Operator_id" class="col-sm-3 col-form-label">Operator ID</label>
+        <div class="col-sm-6">
+            <input asp-for="CrushingProcess.Operator_id" class="form-control" />
+            <span asp-validation-for="CrushingProcess.Operator_id" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="CrushingProcess.Material_id" class="col-sm-3 col-form-label">Material ID</label>
+        <div class="col-sm-6">
+            <input asp-for="CrushingProcess.Material_id" class="form-control" />
+            <span asp-validation-for="CrushingProcess.Material_id" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="CrushingProcess.Size_id" class="col-sm-3 col-form-label">Size ID</label>
+        <div class="col-sm-6">
+            <input asp-for="CrushingProcess.Size_id" class="form-control" />
+            <span asp-validation-for="CrushingProcess.Size_id" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label asp-for="CrushingProcess.crushing_date" class="col-sm-3 col-form-label">Crushing Date</label>
+        <div class="col-sm-6">
+            <input asp-for="CrushingProcess.crushing_date" class="form-control" />
+            <span asp-validation-for="CrushingProcess.crushing_date" class="text-danger"></span>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>@Model.SuccessMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/CrushingProcess/Index" role="button">Cancel</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

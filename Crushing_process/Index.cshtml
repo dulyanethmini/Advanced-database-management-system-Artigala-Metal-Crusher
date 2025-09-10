@@ -1,0 +1,46 @@
+@page
+@model Project.Pages.Crushing_Process.IndexModel
+@{
+    ViewData["Title"] = "List of Crushing_Process";
+}
+
+<br>
+<h2>List of Crushing_Process</h2>
+<a class="btn btn-primary btn-sm" href="/Crushing_Process/Create">New Crushing_Process</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Operator_id</th>
+            <th>Material_id</th>
+            <th> Size_id</th>
+	    <th> crushing_date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListCrushing_Process.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No Crushing_Process found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListCrushing_Process)
+            {
+                <tr>
+                    <td>@item.Process_id</td>
+                    <td>@item.Operator_id</td>
+                    <td>@item.Material_id</td>
+                    <td>@item.Size_id</td>
+		    <td>@item.crushing_date</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Crushing_Process/Edit?id=@item.Process_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Crushing_Process/Delete?id=@item.Process_id>Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

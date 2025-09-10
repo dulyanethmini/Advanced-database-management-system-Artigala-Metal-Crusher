@@ -1,0 +1,29 @@
+@page
+
+@using System.Data.SqlClient;
+@{
+
+    try
+    {
+        String Process_id = Request.Query["Process_id"];
+
+        String connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Project;Integrated Security=True";
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            String sql = "DELETE FROM Crushing_Process WHERE Process_id=@Process_id";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@Process_id", Process_id);
+                command.ExecuteNonQuery();
+
+            }
+        }
+    }
+
+    catch (Exception ex)
+    {
+        
+    }
+}
+
