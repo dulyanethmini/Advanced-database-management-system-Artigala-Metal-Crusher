@@ -1,0 +1,44 @@
+@page
+@model Project.Pages.Material.IndexModel
+@{
+    ViewData["Title"] = "List of Materials";
+}
+
+<br>
+<h2>List of Materials</h2>
+<a class="btn btn-primary btn-sm" href="/Material/Create">New Material</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Received Date</th>
+            <th>Material Name</th>
+            <th>Loaded Quantity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListMaterial.Count == 0)
+        {
+            <tr>
+                <td colspan="5">No materials found.</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var item in Model.ListMaterial)
+            {
+                <tr>
+                    <td>@item.Material_id</td>
+                    <td>@item.Date_received</td>
+                    <td>@item.Material_Name</td>
+                    <td>@item.Loaded_Quantity</td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" href="/Material/Edit?id=@item.Material_id">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="/Material/Delete?id=@item.Material_id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
